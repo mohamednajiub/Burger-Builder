@@ -3,7 +3,7 @@ import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
-import axios from '../../axios-oders';
+import axios from '../../axios-burger';
 import Spinner from '../../components/UI/Spinner/Spinner'
 import withErrorHandler from '../../hoc/WithErrorHandler/WithErrorHandler';
 const INGREDIENT_PRICES = {
@@ -23,7 +23,7 @@ class BurgerBuilder extends Component{
     }
 
     componentDidMount(){
-        axios.get('https://burger-builder-bbfb9.firebaseio.com/ingredients.json')
+        axios.get('/ingredients.json')
             .then(response=>{
                 this.setState({
                     ingredients: response.data
