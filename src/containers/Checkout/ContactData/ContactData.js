@@ -14,10 +14,14 @@ class ContactData extends Component {
                     id: 'fullname',
                     name: 'fullname',
                     placeholder: 'Full Name',
+                },
+                value: '',
+                validation: {
+                    minLength: 3,
                     maxLength: 50,
                     required: true
                 },
-                value: ''
+                valid: false
             },
             email: {
                 labelName: 'E-Mail',
@@ -26,10 +30,14 @@ class ContactData extends Component {
                     id: 'email',
                     name: 'email',
                     placeholder: 'E-Mail',
+                },
+                value: '',
+                validation: {
+                    minLength: 5,
                     maxLength: 50,
                     required: true
                 },
-                value: ''
+                valid: false
             },
             phoneNumber: {
                 labelName: 'Phone Number',
@@ -38,10 +46,14 @@ class ContactData extends Component {
                     id: 'phoneNumber',
                     name: 'phoneNumber',
                     placeholder: 'Phone Number',
+                },
+                value: '',
+                validation: {
+                    minLength: 6,
                     maxLength: 15,
                     required: true
                 },
-                value: ''
+                valid: false
             },
             country: {
                 labelName: 'Choose Country',
@@ -55,7 +67,11 @@ class ContactData extends Component {
                         {value: 'france'}
                     ]
                 },
-                value: ''
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false
             },
             zipCode: {
                 labelName: 'Postal Code',
@@ -64,12 +80,29 @@ class ContactData extends Component {
                     placeholder: 'ZIP Code',
                     inputMode: "numeric",
                 },
-                value: ''
+                value: '',
+                validation: {
+                    minLength: 3,
+                    maxLength: 10
+                },
+                valid: false
             }
         },
         loading: false,
     }
-
+    checkValidity(value, rules){
+        let isValid = true;
+        if(rules.required){
+            isValid = value.trim() !== '' && isValid;
+        }
+        if(rules.minLength){
+            isValid = value.length >= rules.minLength && isValid;
+        }
+        if(rules.maxLength){
+            isValid = value.length >= rules.maxLength && isValid;
+        }
+        return isValid;
+    }
     orderHandler = (event) =>{
         event.preventDefault();
         this.setState({loading: true});
@@ -100,6 +133,7 @@ class ContactData extends Component {
             ...updatedOrderForm[inputIdentifier]
         }
         updatedFormElement.value = event.target.value;
+        updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
         updatedOrderForm[inputIdentifier] = updatedFormElement;
         this.setState({
             orderForm: updatedOrderForm
