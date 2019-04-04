@@ -51,7 +51,7 @@ class ContactData extends Component {
                 },
                 value: '',
                 validation: {
-                    minLength: 6,
+                    minLength: 5,
                     maxLength: 15,
                     required: true
                 },
@@ -85,19 +85,20 @@ class ContactData extends Component {
                     inputMode: "numeric",
                 },
                 value: '',
-                validation: {
-                    minLength: 3,
-                    maxLength: 10
-                },
-                valid: false,
+                validation: {},
+                valid: true,
                 touched: false
             }
         },
+        formIsValid: false,
         loading: false,
     }
 
     checkValidity(value, rules){
         let isValid = true;
+        if (!rules){
+            return true
+        }
         if(rules.required){
             isValid = value.trim() !== '' && isValid;
         }
@@ -105,7 +106,7 @@ class ContactData extends Component {
             isValid = value.length >= rules.minLength && isValid;
         }
         if(rules.maxLength){
-            isValid = value.length >= rules.maxLength && isValid;
+            isValid = value.length <= rules.maxLength && isValid;
         }
         return isValid;
     }
@@ -142,8 +143,13 @@ class ContactData extends Component {
         updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
         updatedFormElement.touched = true;
         updatedOrderForm[inputIdentifier] = updatedFormElement;
+        let formIsValid = true;
+        for (let inputIdentifier in updatedOrderForm){
+            formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid
+        }
         this.setState({
-            orderForm: updatedOrderForm
+            orderForm: updatedOrderForm,
+            formIsValid: formIsValid
         });
     }
 
@@ -164,7 +170,7 @@ class ContactData extends Component {
                         changed={(event) => this.inputChangedHandler(event, formElement.id)}
                     />
                 ))}
-                <Button btnType='Success'>ORDER</Button>
+                <Button btnType='Success' disabled={!this.state.formIsValid}>ORDER</Button>
             </form>
         );
         if (this.state.loading){

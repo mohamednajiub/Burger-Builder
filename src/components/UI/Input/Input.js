@@ -1,7 +1,6 @@
 import React from 'react';
 import classes from './Input.module.css';
 const input = (props) => {
-    console.log(props.elementConfig.config.touched);
     let label = null,
         element = null,
         inputClasses = [classes.InputElement];
