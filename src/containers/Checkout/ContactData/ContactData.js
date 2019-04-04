@@ -21,7 +21,8 @@ class ContactData extends Component {
                     maxLength: 50,
                     required: true
                 },
-                valid: false
+                valid: false,
+                touched: false
             },
             email: {
                 labelName: 'E-Mail',
@@ -37,7 +38,8 @@ class ContactData extends Component {
                     maxLength: 50,
                     required: true
                 },
-                valid: false
+                valid: false,
+                touched: false
             },
             phoneNumber: {
                 labelName: 'Phone Number',
@@ -53,7 +55,8 @@ class ContactData extends Component {
                     maxLength: 15,
                     required: true
                 },
-                valid: false
+                valid: false,
+                touched: false
             },
             country: {
                 labelName: 'Choose Country',
@@ -71,7 +74,8 @@ class ContactData extends Component {
                 validation: {
                     required: true
                 },
-                valid: false
+                valid: false,
+                touched: false
             },
             zipCode: {
                 labelName: 'Postal Code',
@@ -85,11 +89,13 @@ class ContactData extends Component {
                     minLength: 3,
                     maxLength: 10
                 },
-                valid: false
+                valid: false,
+                touched: false
             }
         },
         loading: false,
     }
+
     checkValidity(value, rules){
         let isValid = true;
         if(rules.required){
@@ -134,10 +140,11 @@ class ContactData extends Component {
         }
         updatedFormElement.value = event.target.value;
         updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
+        updatedFormElement.touched = true;
         updatedOrderForm[inputIdentifier] = updatedFormElement;
         this.setState({
             orderForm: updatedOrderForm
-        })
+        });
     }
 
     render() {
