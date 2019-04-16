@@ -27,7 +27,7 @@ export const fetchIngredientsFalied = () => {
     }
 }
 
-export const initIngredients = ()=>{
+export const initIngredients = () => {
     return dispatch => {
         axios.get('/ingredients.json')
             .then(response=>{

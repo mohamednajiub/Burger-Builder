@@ -5,8 +5,8 @@ import axios from '../../../axios-burger';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import Input from '../../../components/UI/Input/Input';
 import {connect} from 'react-redux';
-import withErrorHandler from '../../../hoc/WithErrorHandler/WithErrorHandler'
-import * as actions from '../../../store/actions/index'
+import withErrorHandler from '../../../hoc/WithErrorHandler/WithErrorHandler';
+import * as actions from '../../../store/actions/index';
 class ContactData extends Component {
     state = {
         orderForm: {
@@ -95,7 +95,6 @@ class ContactData extends Component {
         },
         formIsValid: false,
     }
-
     checkValidity(value, rules){
         let isValid = true;
         if (!rules){
@@ -179,9 +178,9 @@ class ContactData extends Component {
 }
 const mapStateToProps = (state) => {
     return {
-        ingredients: state.ingredients,
-        totalPrice: state.totalPrice,
-        loading: state.loading
+        ingredients: state.burgerBuilder.ingredients,
+        totalPrice: state.burgerBuilder.totalPrice,
+        loading: state.order.loading
     }
 }
 
